@@ -1,7 +1,7 @@
 var Avrgirl = require('@dawee/avrgirl-arduino');
 
 var avrgirl = new Avrgirl({
-  board: 'nano'
+  board: 'mega'
 });
 
 avrgirl.flash('mega2560-dual-smt172-needlevalve.ino.mega.hex', function (error) {
