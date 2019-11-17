@@ -32,7 +32,7 @@ The Mega will report every second the temperatures in Celsius and the differenti
 it will report -1 as the value for that sensor. Absence of the pressure sensor will result in a negative value caused by the floating A0 pin.
 
 The install script is meant to be run on a raspberry pi like this:
-wget -O -  | sh
+`wget -O - https://raw.githubusercontent.com/nrbrt/2560pro-smt172-needlevalve/master/install.sh | sh`
 
 This will program the Mega, that needs to be connected at that moment, without any user interaction and is meant for novice users
 and easy installation.
