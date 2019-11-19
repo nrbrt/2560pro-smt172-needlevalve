@@ -11,6 +11,21 @@
 #define dirPin 12
 #define stepPin 11
 
+// prepare microstepping modes
+#define m0Pin 28
+#define m1Pin 27
+#define m2Pin 25
+
+int fullStep[4] = {0,0,0};
+int halfStep[4] = {1,0,0};
+int quarterStep[4] = {0,1,0};
+int eighthStep[4] = {1,1,0};
+int sixteenthStep[4] = {0,0,1};
+int thirtysecondthStep[4] = {1,1,1};
+
+// enable/disable motor
+#define enablePin 31
+
 // select the input pin for the Pressure Sensor
 int sensorPin = A0;    
 
@@ -39,6 +54,17 @@ void setup() {
   Serial.setTimeout(50);
   SMT172_T4::startTemperature(0.001);
   SMT172_T5::startTemperature(0.001);
+  
+  //default enable motor and set full step mode
+  pinMode(enablePin, OUTPUT);
+  digitalWrite(enablePin,LOW);
+  pinMode(m0Pin, OUTPUT);
+  digitalWrite(m0Pin, LOW);
+  pinMode(m1Pin, OUTPUT);
+  digitalWrite(m1Pin, LOW);
+  pinMode(m2Pin, OUTPUT);
+  digitalWrite(m2Pin, LOW);
+  
   pinMode(home_switch, INPUT_PULLUP); //enable internal pullup
   pinMode(sensorPin, INPUT);  // Pressure sensor is on Analog pin 0
   delay(30);
@@ -100,19 +126,61 @@ void loop() {
         MoveToPosition(sParams[1].toInt());
      }
      
-
+     // define speed settings
      if(sParams[0] == "spd" && count == 2){
       motorspeed = sParams[1].toFloat();
       stepper.setMaxSpeed(motorspeed);
       stepper.setSpeed(motorspeed);
      }
      
-
+     // define acceleration settings
      if(sParams[0] == "acc" && count == 2){
       motoraccel = sParams[1].toFloat();
       stepper.setAcceleration(motoraccel);
      }
-     
+
+     // enable or disable the motor
+     if(sParams[0] == "motor" && count == 2){
+      if(sParams[1] == "enable"){
+        digitalWrite(enablePin, LOW);
+      }else{
+        digitalWrite(enablePin, HIGH);
+      }
+     }
+
+     // selection of microstepping mode
+     if(sParams[0] == "mode" && count == 2){
+      if(sParams[1] == "1"){
+        digitalWrite(m0Pin,fullStep[0]);
+        digitalWrite(m1Pin,fullStep[1]);
+        digitalWrite(m2Pin,fullStep[2]);
+      }
+      if(sParams[1] == "2"){
+        digitalWrite(m0Pin,halfStep[0]);
+        digitalWrite(m1Pin,halfStep[1]);
+        digitalWrite(m2Pin,halfStep[2]);
+      }
+      if(sParams[1] == "4"){
+        digitalWrite(m0Pin,quarterStep[0]);
+        digitalWrite(m1Pin,quarterStep[1]);
+        digitalWrite(m2Pin,quarterStep[2]);
+      }
+      if(sParams[1] == "8"){
+        digitalWrite(m0Pin,eighthStep[0]);
+        digitalWrite(m1Pin,eighthStep[1]);
+        digitalWrite(m2Pin,eighthStep[2]);
+      }
+      if(sParams[1] == "16"){
+        digitalWrite(m0Pin,sixteenthStep[0]);
+        digitalWrite(m1Pin,sixteenthStep[1]);
+        digitalWrite(m2Pin,sixteenthStep[2]);
+      }
+      if(sParams[1] == "32"){
+        digitalWrite(m0Pin,thirtysecondthStep[0]);
+        digitalWrite(m1Pin,thirtysecondthStep[1]);
+        digitalWrite(m2Pin,thirtysecondthStep[2]);
+      }
+     }
   }
   stepper.run();
 }
