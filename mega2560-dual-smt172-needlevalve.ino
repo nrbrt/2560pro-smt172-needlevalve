@@ -119,6 +119,7 @@ void loop() {
 
 //find sensor and get temperature
 void getTemp(){
+  SMT172_T4::startTemperature(0.001);
   repeat_T4:
     switch (SMT172_T4::getStatus()) {
     case 0: goto repeat_T4; // O Dijkstra, be merciful onto me, for I have sinned against you :)
@@ -131,6 +132,7 @@ void getTemp(){
   
   stepper.run();
   
+  SMT172_T5::startTemperature(0.001);
   repeat_T5:
     switch (SMT172_T5::getStatus()) {
     case 0: goto repeat_T5; // O Dijkstra, be merciful onto me, for I have sinned against you :)
