@@ -109,37 +109,38 @@ void loop() {
      }
        
      
-     //calibrate zero position needlevalve. Use=> cal:steps_beyond_homeswitch:motor_acceleration:motor_speed Returns nothing
+     //calibrate zero position needlevalve. Use=> cal:steps_beyond_homeswitch:motor_acceleration:motor_speed. 
+     //This will also run in microstepping mode if that was set earlier. Returns nothing
      if(sParams[0] == "cal" && count == 4){
         CalibrateNeedleValve(sParams[1].toInt(),sParams[2].toFloat(),sParams[3].toFloat());
      }
      
      
-     //move non-blocking to absolute position. Use=> move:target_position:motor_acceleration:motor_speed Returns nothing unless not calibrated
+     //move non-blocking to absolute position. Use=> move:target_position. Returns nothing unless not calibrated
      if(sParams[0] == "move" && count == 2){
         MoveTo(sParams[1].toInt());
      }
      
      
-     //move blocking to absolute position. Use=> pos:target_position:motor_acceleration:motor_speed Returns nothing unless not calibrated
+     //move blocking to absolute position. Use=> pos:target_position. Returns nothing unless not calibrated
      if(sParams[0] == "pos" && count == 2){
         MoveToPosition(sParams[1].toInt());
      }
      
-     // define speed settings
+     // define speed settings. Use=> spd:speed_in_steps_per_second.
      if(sParams[0] == "spd" && count == 2){
       motorspeed = sParams[1].toFloat();
       stepper.setMaxSpeed(motorspeed);
       stepper.setSpeed(motorspeed);
      }
      
-     // define acceleration settings
+     // define acceleration settings. Use=> acc:acceleration_in_steps_per_second_per_second
      if(sParams[0] == "acc" && count == 2){
       motoraccel = sParams[1].toFloat();
       stepper.setAcceleration(motoraccel);
      }
 
-     // enable or disable the motor
+     // enable or disable the motor Use=> motor:disable
      if(sParams[0] == "motor" && count == 2){
       if(sParams[1] == "enable"){
         digitalWrite(enablePin, LOW);
@@ -148,7 +149,7 @@ void loop() {
       }
      }
 
-     // selection of microstepping mode
+     // selection of microstepping mode. Use=> mode:1 for full step mode, mode:2 for half step mope, etc.
      if(sParams[0] == "mode" && count == 2){
       if(sParams[1] == "1"){
         digitalWrite(m0Pin,fullStep[0]);
