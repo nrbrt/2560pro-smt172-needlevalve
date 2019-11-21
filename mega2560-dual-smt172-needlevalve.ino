@@ -12,7 +12,7 @@
 #define stepPin 11
 
 // prepare microstepping modes
-#define m0Pin 28
+#define m0Pin 29
 #define m1Pin 27
 #define m2Pin 25
 
