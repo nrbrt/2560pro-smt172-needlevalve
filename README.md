@@ -1,5 +1,5 @@
 # 2560pro-smt172-needlevalve
-Controls a needle valve mechanism, reports temperature from 2 smt172 sensors and measures differential pressure using a mpx7002dp sensor.
+Controls a needle valve mechanism using a drv8825 steppermotor driver, reports temperature from 2 smt172 sensors and measures differential pressure using a mpx7002dp sensor.
 It is meant to be used on a Arduino Mega 2560 or Mega 2560 Pro in combination with a raspberry pi.
 
 The commands that can be sent are the following:
@@ -27,6 +27,14 @@ This takes care of the absolute positioning. -x is a position that can be reache
 `es`
 
 This returns the state of the home-switch (NO): 0(closed) or 1(open)
+
+`mode:x`
+
+This selects the microstepping mode on the drv8825 steppermotor driver. D29 on the mega connects to m0 on the drv8825, D27 to m1 and D25 to m2. The default is full step mode.
+
+`motor:x`
+
+This enables or disables the motor, so it is not held in position actively. x can be `disable` or `enable`, so `motor:disable` will free the motor. The default is enabled.  
 
 The Mega will report every second the temperatures in Celsius and the differential pressure in kPa using the format `t1:xx,t2:yy,p:zz`. If the temperature sensors are not present,
 it will report -1 as the value for that sensor. Absence of the pressure sensor will result in a negative value caused by the floating A0 pin.
