@@ -6,7 +6,7 @@ The commands that can be sent are the following:
 
 `cal:x:y:z`
 
-This calibrates the needle valve mechanism. It seeks the home-switch and settles there, then it moves with speed z(steps/s) and acceleration y(steps/s/s), x steps CW or CCW (-x = CCW, x = CW) and defines that position to be 0. This makes manual fine-tuning possible to make sure the needle valve can be opened with the motor without loosing steps.
+This calibrates the needle valve mechanism. It seeks the home-switch and settles there, then it moves with speed z(steps/s) and acceleration y(steps/s/s), x steps CW or CCW (-x = CCW, x = CW) and defines that position to be 0. This makes manual fine-tuning possible to make sure the needle valve can be opened with the motor without losing steps.
 
 `spd:x`
 
