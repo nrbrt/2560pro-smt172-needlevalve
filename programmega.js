@@ -1,4 +1,4 @@
-var Avrgirl = require('@dawee/avrgirl-arduino');
+var Avrgirl = require('avrgirl-arduino');
 
 var avrgirl = new Avrgirl({
   board: 'mega'
